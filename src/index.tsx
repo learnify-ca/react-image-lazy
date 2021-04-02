@@ -52,7 +52,7 @@ const LazyImage: FC<LazyImageProps> = ({
 	LazyImageProps,
 	FC<LazyImageProps>
 > => {
-	const { src, error } = useImage({ srcList, useSuspense: true });
+	const { src, error } = useImage({ srcList, useSuspense: false });
 
 	const defaultSrc = Array.isArray(srcList) ? srcList[0] : srcList;
 
