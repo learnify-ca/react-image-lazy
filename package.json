@@ -1,6 +1,6 @@
 {
 	"name": "@learnify/react-image",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"description": "Light wrapper around react-image, with built-in error boundary and progressive loading effect",
 	"main": "lib/index.js",
 	"scripts": {
