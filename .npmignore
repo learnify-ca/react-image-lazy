@@ -1,5 +1,6 @@
 config
 docs
+example
 node_modules
 src
 .env

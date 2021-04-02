@@ -1,2 +1,5 @@
-# React Lazy Image
-A custom render prop component enabling progressive image loading.
+# Learnify React Image
+Light wrapper component around react-image, with built-in error boundary and progressive loading effects.
+
+## Installation
+`npm install @learnify/react-image`

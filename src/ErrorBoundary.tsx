@@ -22,8 +22,9 @@ export default class ErrorBoundary<Logger = any> extends Component<ErrorBoundary
 
 	public render(): ReactNode {
 		const { children, errorFallback } = this.props;
-		const { hasError } = this.state;
+		const { hasError, error, errorInfo } = this.state;
 
-		return !hasError ? children : errorFallback;
+		if (!hasError) return children;
+		else if (error) return errorFallback(error, errorInfo);
 	}
 };
