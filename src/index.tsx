@@ -56,7 +56,7 @@ const LazyImage: FC<LazyImageProps> = ({
 
 	return (
 		<ErrorBoundary<typeof error> {...props}>
-			<Suspense fallback={<BlurredImage {...{ src, alt, blur, style }} />}>
+			<Suspense fallback={<BlurredImage {...{ src, alt, blur, style }} /> || <></>}>
 				<RealImage {...{ src, alt, style }} />
 			</Suspense>
 		</ErrorBoundary>
