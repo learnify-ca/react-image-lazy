@@ -54,9 +54,11 @@ const LazyImage: FC<LazyImageProps> = ({
 > => {
 	const { src, error } = useImage({ srcList, useSuspense: true });
 
+	const defaultSrc = Array.isArray(srcList) ? srcList[0] : srcList;
+
 	return (
 		<ErrorBoundary<typeof error> {...props}>
-			<Suspense fallback={<BlurredImage {...{ src, alt, blur, style }} /> || <></>}>
+			<Suspense fallback={<BlurredImage {...{ src: defaultSrc, alt, blur, style }} /> || <></>}>
 				<RealImage {...{ src, alt, style }} />
 			</Suspense>
 		</ErrorBoundary>
