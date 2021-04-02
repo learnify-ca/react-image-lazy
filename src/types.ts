@@ -1,5 +1,4 @@
 import { CSSProperties, ErrorInfo, ReactNode } from "react";
-import { useImageProps } from "react-image";
 
 export interface ErrorBoundaryProps<Logger = any> {
 	errorFallback: (error: Error, errorInfo?: ErrorInfo) => ReactNode;
@@ -12,13 +11,23 @@ export interface ErrorBoundaryState {
 	errorInfo?: ErrorInfo;
 }
 
-export interface ImageProps {
-	src?: string;
+export interface ImageProps<T> {
+	src: T;
 	alt?: string;
-	blur?: number;
 	style?: CSSProperties;
 }
 
-export type LazyImageProps<Logger = any> = ImageProps & ErrorBoundaryProps<Logger> & useImageProps & {
+export type RealImageProps<T> = ImageProps<T>;
+
+export interface BlurredImageProps<T> extends ImageProps<T> {
+	delay: number;
+	blur: number;
+}
+
+export type LazyImageProps<Logger = any> = ImageProps<string> & ErrorBoundaryProps<Logger> & {
+	blur?: number;
 	delay?: number;
+	imgPromise?: ((...args: any[]) => Promise<void>);
+	placeholder: string;
+	useSuspense?: boolean;
 }

@@ -1,12 +1,11 @@
 import React from "react";
 
 /* Components */
-import { Suspense } from "react";
 import ErrorBoundary from "./ErrorBoundary";
 
 /* Types */
 import { FC, ReactElement } from "react";
-import { ImageProps, LazyImageProps } from "./types";
+import { BlurredImageProps, LazyImageProps, RealImageProps } from "./types";
 import { useImage } from "react-image";
 
 export * from "./hooks";
@@ -14,14 +13,15 @@ export * from "./hooks";
 const BlurredImage = ({
 	src,
 	alt,
+	delay,
 	blur = 20,
-	...style
-}: ImageProps) =>
+	style,
+}: BlurredImageProps<string>) =>
 	<img
 		{...{ src, alt }}
 		style={{
 			filter: `blur(${blur}px)`,
-			transition: "none",
+			transition: `filter ${delay / 1000}s ease-out`,
 			...style
 		}}
 	/>
@@ -29,8 +29,8 @@ const BlurredImage = ({
 const RealImage = ({
 	src,
 	alt,
-	style,
-}: ImageProps) =>
+	style
+}: RealImageProps<string | undefined>) =>
 	<img
 		{...{ src, alt }}
 		style={{
@@ -42,25 +42,39 @@ const RealImage = ({
 	/>
 
 const LazyImage: FC<LazyImageProps> = ({
-	srcList,
+	placeholder,
 	alt,
 	style,
 	blur = 20,
 	delay = 300,
+	errorFallback,
+	logErrors,
+	useSuspense,
+	imgPromise,
 	...props
 }): ReactElement<
 	LazyImageProps,
 	FC<LazyImageProps>
 > => {
-	const { src, error } = useImage({ srcList, useSuspense: false });
-
-	const defaultSrc = Array.isArray(srcList) ? srcList[0] : srcList;
+	const { src, error } = useImage({ srcList: props.src, imgPromise, useSuspense });
 
 	return (
-		<ErrorBoundary<typeof error> {...props}>
-			<Suspense fallback={<BlurredImage {...{ src: defaultSrc, alt, blur, style }} /> || <></>}>
-				<RealImage {...{ src, alt, style }} />
-			</Suspense>
+		<ErrorBoundary<typeof error> {...{ errorFallback, logErrors }}>
+			{
+				!props.src ?
+					<BlurredImage
+						src={placeholder}
+						alt={alt}
+						style={style}
+						blur={blur}
+						delay={delay}
+					/> :
+					<RealImage
+						src={src}
+						alt={alt}
+						style={style}
+					/>
+			}
 		</ErrorBoundary>
 	);
 };
