@@ -3,9 +3,11 @@ docs
 node_modules
 src
 .env
+.npmrc
 .gitignore
 babel.config.js
-jest.config.js
+jest.config.ts
 LICENSE.md
 README.md
 tsconfig.json
+webpack.config.js

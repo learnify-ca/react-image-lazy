@@ -1,7 +1,7 @@
 {
 	"name": "@learnify/react-lazy-image",
 	"version": "0.1.0",
-	"description": "Light wrapper around react-image, with built-in error boundar and progressive loading effect",
+	"description": "Light wrapper around react-image, with built-in error boundary and progressive loading effect",
 	"main": "lib/index.js",
 	"scripts": {
 		"build": "npm run clean && npm run build:types && npm run build:js",
